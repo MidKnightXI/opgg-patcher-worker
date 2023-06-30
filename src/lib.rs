@@ -1,7 +1,8 @@
 use worker::*;
 use reqwest;
 
-async fn main(req: Request, env: Env, ctx: Context) -> Result<Response> {
+#[event(fetch)]
+async fn main(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
     const BASE_URL: &str = "https://opgg-desktop-data.akamaized.net";
     let url: Url;
     let file_name: &str;
