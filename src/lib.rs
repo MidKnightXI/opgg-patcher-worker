@@ -15,6 +15,11 @@ async fn main(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
         },
     };
 
+    let mut headers = Headers::new();
+    for (name, value) in response.headers().iter() {
+        let _ = headers.set(name.as_str(), value.to_str().unwrap());
+    }
+
     let content = match response.text().await {
         Ok(v) => v,
         Err(e) => return Response::error(e.to_string(), 500)
@@ -35,9 +40,7 @@ async fn main(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
     //         content = content.replace("https://www.mobwithad.com", "https://google.com");
     //         content.push_str("\ndocument.head.insertAdjacentHTML(\"beforeend\", '<style>#ads-container,#ads-container2,#ads-container3,#sids-ads,main > div[style]:last-child{display: none !important}</style>')");
     //     }
-
-    //     return Response::ok(content);
     // }
 
-    Response::ok(content)
+    Ok(Response::ok(content)?.with_headers(headers))
 }
