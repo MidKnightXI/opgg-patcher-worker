@@ -12,7 +12,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 regex = "1.8.4"
-reqwest = { version = "0.11.18", feature = "blocking" }
+reqwest = "0.11.18"
 worker = "0.0.15"
 
 [profile.release]
